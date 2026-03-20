@@ -2,76 +2,65 @@ package com.facens.app_biblioteca_api.controller;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.facens.app_biblioteca_api.model.Livro;
 import com.facens.app_biblioteca_api.service.LivroService;
 
-@RestController
-@RequestMapping("/livros")
+@RestController 
+//Combinação do Controller com o ResponseBody, ou seja, já retorna o JSON
+@RequestMapping("/livros") 
+//Define o caminho base para as requisições relacionadas aos livros
+
 public class LivroController {
     @Autowired
     private LivroService livroService;
 
+    public LivroController(LivroService livroService) {
+        this.livroService = livroService;
+    }
+
     @GetMapping
-    public List<Livro> getLivros() {
-        return livroService.getLivros();
+    public List<Livro> listarLivros() {
+        return livroService.listarTodos();
     }
 
     @GetMapping("/teste")
-    public String teste() {
+    public String testeAPI() {
         return "API de Biblioteca funcionando!";
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Livro> getLivro(@PathVariable Long id) {
-        Livro livro = livroService.getLivro(id);
-        if (livro != null) {
-            return ResponseEntity.ok(livro);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+    @GetMapping("/{id}") //Define que o método responderá a requisições GET com um ID específico
+    public Livro buscaPorId(@PathVariable Long id) {
+        return livroService.buscaPorId(id);
     }
 
     @PostMapping
-    public Livro postLivro(@RequestBody Livro livro) {
-        return livroService.postLivro(livro);
+    @ResponseStatus(HttpStatus.CREATED) //Define o status HTTP 201 para indicar que um recurso foi criado com sucesso
+    public Livro criarLivro(@RequestBody Livro livro) {
+        return livroService.criar(livro);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Livro> putLivro(@PathVariable Long id, @RequestBody Livro livro) {
-        Livro livroAtualizado = livroService.putLivro(id, livro);
-        if (livroAtualizado != null) {
-            return ResponseEntity.ok(livroAtualizado);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+    public Livro atualizarLivro(@PathVariable Long id, @RequestBody Livro livro) {
+        return livroService.atualizar(id, livro);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteLivro(@PathVariable Long id) {
-        livroService.deleteLivro(id);
-        return ResponseEntity.noContent().build();
+    @ResponseStatus(HttpStatus.NO_CONTENT) //Define o status HTTP 204 para indicar que a requisição foi bem-sucedida, mas não há conteúdo para retornar
+    public void removerLivro(@PathVariable Long id) {
+        return livroService.deletar(id);
     }
 
     @PutMapping("/{id}/emprestar")
-    public ResponseEntity<Livro> emprestarLivro(@PathVariable Long id) {
-        Livro livroEmprestado = livroService.emprestarLivro(id);
-        if (livroEmprestado != null) {
-            return ResponseEntity.ok(livroEmprestado);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+    public Livro emprestarLivro(@PathVariable Long id) {
+        return livroService.emprestar(id);
     }
 
     @PutMapping("/{id}/devolver")
-    public ResponseEntity<Livro> devolverLivro(@PathVariable Long id) {
-        Livro livroDevolvido = livroService.devolverLivro(id);
-        if (livroDevolvido != null) {
-            return ResponseEntity.ok(livroDevolvido);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+    public Livro devolverLivro(@PathVariable Long id) {
+        return livroService.devolver(id);
     }
 }

@@ -1,5 +1,0 @@
-INSERT INTO LIVRO (TITULO, AUTOR, EMPRESTADO) VALUES ('Dom Casmurro','Machado de Assis', false);
-
-INSERT INTO LIVRO (TITULO, AUTOR, EMPRESTADO) VALUES ('1984','George Orwell', false);
-
-INSERT INTO LIVRO (TITULO, AUTOR, EMPRESTADO) VALUES ('O Hobbit','J.R.R. Tolkien', false);

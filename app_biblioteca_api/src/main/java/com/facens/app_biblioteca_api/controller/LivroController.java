@@ -34,7 +34,7 @@ public class LivroController {
 
     @GetMapping("/{id}") //Define que o método responderá a requisições GET com um ID específico
     public Livro buscaPorId(@PathVariable Long id) {
-        return livroService.buscaPorId(id);
+        return livroService.buscarPorId(id);
     }
 
     @PostMapping
@@ -51,7 +51,7 @@ public class LivroController {
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT) //Define o status HTTP 204 para indicar que a requisição foi bem-sucedida, mas não há conteúdo para retornar
     public void removerLivro(@PathVariable Long id) {
-        return livroService.deletar(id);
+        // return livroService.deletar(id);
     }
 
     @PutMapping("/{id}/emprestar")

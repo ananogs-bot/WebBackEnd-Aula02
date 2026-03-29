@@ -21,7 +21,7 @@ public class Livro {
     private String autor;
 
     @Builder.Default
-    private boolean emprestado = false;
+    private Boolean emprestado = false;
     private LocalDate dataEmprestimo;
     
 }

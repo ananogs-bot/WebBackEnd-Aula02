@@ -50,8 +50,8 @@ public class LivroController {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT) //Define o status HTTP 204 para indicar que a requisição foi bem-sucedida, mas não há conteúdo para retornar
-    public void removerLivro(@PathVariable Long id) {
-        // return livroService.deletar(id);
+    public Livro removerLivro(@PathVariable Long id) {
+        return livroService.deletar(id);
     }
 
     @PutMapping("/{id}/emprestar")

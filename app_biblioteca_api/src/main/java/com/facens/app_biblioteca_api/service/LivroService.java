@@ -62,10 +62,11 @@ public class LivroService {
         return livroRepository.save(livroExistente);
     }
 
-    public void deletar(Long id) {
+    public Livro deletar(Long id) {
         Livro livro = buscarPorId(id);
 
         livroRepository.delete(livro);
+        return livro;
     }
 
     public Livro emprestar(Long id) {
